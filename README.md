@@ -23,3 +23,19 @@ g++ -o pnl_calculator_main pnl_calculator_main.cpp
 ./pnl_calculator_main data/multi_symbol_trades.csv fifo
 ./pnl_calculator_main data/multi_symbol_trades.csv lifo
 ```
+
+## Running Tests
+
+Assuming Google Test is already installed:
+
+```bash
+# Navigate to test directory
+cd test/
+
+# Compile and run tests
+make test
+
+# Or compile manually and run
+g++ -std=c++98 -Wall -o test_pnl_calculator_main test_pnl_calculator_main.cpp -lgtest -lgtest_main -lpthread
+./test_pnl_calculator_main
+```
