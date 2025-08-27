@@ -15,6 +15,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <cmath>
+#include <cctype>
 
 using namespace std;
 
@@ -193,7 +194,33 @@ public:
         }
         
         string line;
-        getline(file, line); // Skip header
+        getline(file, line); 
+        
+        // handling malformed header
+        for (size_t i = 0; i < line.length(); ++i) {
+            if (line[i] == ' ') {
+                line[i] = '\n';
+            }
+        }
+        
+        stringstream ss(line);
+        string headerLine;
+        getline(ss, headerLine); 
+        
+        string tradeLine;
+        while (getline(ss, tradeLine)) {
+            if (tradeLine.empty()) continue;
+            
+            vector<string> tokens = split(tradeLine, ',');
+            if (tokens.size() >= 5) {
+                long timestamp = strtol(tokens[0].c_str(), NULL, 10);
+                string symbol = tokens[1];
+                char side = tokens[2][0];
+                double price = strtod(tokens[3].c_str(), NULL);
+                long quantity = strtol(tokens[4].c_str(), NULL, 10);
+                trades.push_back(Trade(timestamp, symbol, side, price, quantity));
+            }
+        }
         
         while (getline(file, line)) {
             if (line.empty()) continue;
