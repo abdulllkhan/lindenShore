@@ -1,0 +1,12 @@
+# object files
+*.o 
+
+# executables
+pnl_calculator
+pnl_calculator_test
+
+build/
+
+.DS_Store
+
+.vscode/
